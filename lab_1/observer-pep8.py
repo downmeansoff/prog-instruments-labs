@@ -6,8 +6,9 @@
 
 # There are two jungles that both produce bananas, but of different kinds:
 
-# PRODUCE:
-# - bananas:
+# Produce:
+# - Bananas:
+
 class Banana:
     """Class representing a banana."""
     
@@ -32,7 +33,8 @@ class YellowBanana(Banana):
         pass
 
 
-# - coconuts:
+# - Coconuts:
+
 class Coconut:
     """Class representing a coconut."""
     
@@ -57,7 +59,7 @@ class YellowCoconut(Coconut):
         pass
 
 
-# JUNGLES/FACTORIES:
+# Jungle/Factories:
 
 class Jungle:
     """Abstract class for jungles."""
@@ -239,10 +241,6 @@ class Company:
     
 
 # IV. Dependency Injection
-
-# Menu Item
-
-# But Python is not type-sensitive, so is there a need to make an interface?
 
 class MenuItem:
     """Abstract class for menu items."""
@@ -472,7 +470,6 @@ class BarbieListener(EventListener):
     
     def update(self, event):
         """Updates the listener about the Barbie event."""
-        # Send mail about Barbie
         pass
 
 
@@ -481,5 +478,4 @@ class OppenheimerListener(EventListener):
     
     def update(self, event):
         """Updates the listener about the Oppenheimer event."""
-        # Send mail about Oppenheimer
         pass
