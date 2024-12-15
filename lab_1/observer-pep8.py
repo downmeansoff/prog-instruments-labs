@@ -1,66 +1,66 @@
-#Name: Dan-Ha Le
+# Name: Dan-Ha Le
 
-#Design Patterns
+# Design Patterns
 
 # I. Abstract Factory
 
-#There are two jungles that both produce bananas, but of different kinds:
+# There are two jungles that both produce bananas, but of different kinds:
 
-#PRODUCE:
+# PRODUCE:
 # - bananas:
-class banana():
-    def harvest():
+class Banana:
+    def harvest(self):
         pass
 
-class greenBanana(banana):
-    def harvest():
+class GreenBanana(Banana):
+    def harvest(self):
         pass
 
-class yellowBanana(banana):
-    def harvest():
+class YellowBanana(Banana):
+    def harvest(self):
         pass
 
 # - coconuts:
-class coconut():
-    def harvest():
+class Coconut:
+    def harvest(self):
         pass
 
-class greenCoconut(coconut):
-    def harvest():
+class GreenCoconut(Coconut):
+    def harvest(self):
         pass
         
-class yellowCoconut(coconut):
-    def harvest():
+class YellowCoconut(Coconut):
+    def harvest(self):
         pass
 
 # JUNGLES/FACTORIES:
 
-class Jungle():
-    def getBanana():
+class Jungle:
+    def get_banana(self):
         pass
-    def getCoconut():
+    
+    def get_coconut(self):
         pass
-
 
 class JungleA(Jungle):
-    def getBanana():
-        return greenBanana()
+    def get_banana(self):
+        return GreenBanana()
 
-    def getCoconut():
-        return greenCoconut()
+    def get_coconut(self):
+        return GreenCoconut()
 
 class JungleB(Jungle):
-    def getBanana():
-        return yellowBanana()
+    def get_banana(self):
+        return YellowBanana()
     
-    def getCoconut():
-        return yellowCoconut()
+    def get_coconut(self):
+        return YellowCoconut()
     
 # II. Builder Design Pattern
 
 # Build cups of boba:
 
-class Boba ():
+class Boba:
     def __init__(self, flavour="classic", size="M", toppings=["boba"], ice=100, sugar=100, dinein=True):
         print("Initialized")
         self.flavour = flavour
@@ -70,7 +70,7 @@ class Boba ():
         self.sugar = sugar
         self.dinein = dinein
     
-class BobaBuilder ():
+class BobaBuilder:
     
     def __init__(self, flavour, size, toppings, ice, sugar, dinein):
         self.flavour = flavour
@@ -80,30 +80,30 @@ class BobaBuilder ():
         self.sugar = sugar
         self.dinein = dinein
     
-    def flavour (self, flavour):
+    def flavour(self, flavour):
         self.flavour = flavour
     
-    def size (self, size):
+    def size(self, size):
         self.size = size
     
-    def toppings (self, toppings):
+    def toppings(self, toppings):
         self.toppings = toppings
     
-    def ice (self, ice):
+    def ice(self, ice):
         self.ice = ice
     
-    def sugar (self, sugar):
+    def sugar(self, sugar):
         self.sugar = sugar
     
-    def dinein (self, dinein):
+    def dinein(self, dinein):
         self.dinein = dinein
     
     def build(self):
         return Boba(self.flavour, self.size, self.toppings, self.ice, self.sugar, self.dinein)
 
-class Director():
+class Director:
     
-    def buildDanHaOrder(builder):
+    def build_dan_ha_order(builder):
         builder.flavour("Oolong")
         builder.size("L")
         builder.toppings(["boba", "boba", "boba"])
@@ -112,7 +112,7 @@ class Director():
         builder.dinein = False
         return builder.build()
     
-    def buildWorstOrder(builder):
+    def build_worst_order(builder):
         builder.flavour("Fruit")
         builder.size("S")
         builder.toppings(["red beans"])
@@ -125,32 +125,30 @@ class Director():
 
 # A single point of access:
 
-class Company():
+class Company:
     
     CEO = None
 
-    #but this is a public?
+    # but this is a public?
     def __init__(self):
         self.data = None
-    
     
     def __Company(self, data):
         self.data = data
     
-    def getCEO(self, data):
+    def get_CEO(self, data):
         if CEO == None:
-            CEO = Company.__Company(self,data)
+            CEO = Company.__Company(self, data)
         return CEO 
     
 
-
 # IV. Dependency Injection
 
-#Menu Item
+# Menu Item
 
-# But Python is not type-sensitve, so is there a need to make an interface?
+# But Python is not type-sensitive, so is there a need to make an interface?
 
-class MenuItem():
+class MenuItem:
     pass
 
 class FriedRice(MenuItem):
@@ -159,25 +157,25 @@ class FriedRice(MenuItem):
 class AvocadoToast(MenuItem):
     pass
 
-class Restaurant():
+class Restaurant:
     def __init__(self, food):
         self.food = food
 
-    def prepareFood(self):
+    def prepare_food(self):
         pass
 
 # V. Delegation
 
-class Researcher():
-    def exec():
+class Researcher:
+    def exec(self):
         pass
 
 class UnpaidIntern(Researcher):
-    def exec():
-        print ("Unpaid Intern doing research")
+    def exec(self):
+        print("Unpaid Intern doing research")
 
 class AssistantProfessor(Researcher):
-    def exec():
+    def exec(self):
         print("Assistant Professor doing research")
 
 class Professor(Researcher):
@@ -192,22 +190,22 @@ class Professor(Researcher):
 
 # VII. Chain of Responsibility (Chaining Method)
 
-class Handler():
+class Handler:
     
     def __init__(self):
         self.next = None
     
-    def getNextHandler (self):
+    def get_next_handler(self):
         return self.next
     
-    def setNextHandler (self, next):
+    def set_next_handler(self, next):
         self.next = next
     
     def handle(self, num, cvv):
         pass
     
-    def handleNext(self, num, cvv):
-        if self.next == None:
+    def handle_next(self, num, cvv):
+        if self.next is None:
             return True
         return next.handle(num, cvv)
     
@@ -220,7 +218,7 @@ class HandleNum(Handler):
     def handle(self, num, cvv):
         if num not in self.database.keys():
             return False
-        return self.handleNext(self, num, cvv) 
+        return self.handle_next(self, num, cvv) 
 
 class HandleCVV(Handler):
 
@@ -231,9 +229,9 @@ class HandleCVV(Handler):
     def handle(self, num, cvv):
         if num != self.database.get(num):
             return False
-        return self.handleNext(self, num, cvv)
+        return self.handle_next(self, num, cvv)
 
-class AuthService():
+class AuthService:
     def __init__(self, handler):
         self.handler = handler
     
@@ -244,24 +242,24 @@ class AuthService():
 
 def CreditMain():
     database = {}
-    handler1 = HandleNum(database).setNextHandler(handler2 = HandleCVV(database))
+    handler1 = HandleNum(database).set_next_handler(HandleCVV(database))
     authenticate = AuthService(handler1)
     authenticate.authenticate("number", "security code")
 
 
 # VIII. Observer Design Pattern
 
-class Cinema():
+class Cinema:
     def __init__(self, noti):
         self.noti = noti
     
-    def newMovieOut(self):
+    def new_movie_out(self):
         self.noti.notify()
     
-    def getMovie(self):
+    def get_movie(self):
         return self.noti
 
-class Notification():
+class Notification:
     def __init__(self):
         self.listserv = {}
     
@@ -281,16 +279,16 @@ class Notification():
         for email in emails:
             email.update(event)
 
-class EventListener():
-    def update (event):
+class EventListener:
+    def update(self, event):
         pass
 
 class BarbieListener(EventListener):
-    def update(event):
-        #Send mail about Barbie
+    def update(self, event):
+        # Send mail about Barbie
         pass
 
 class OppenheimerListener(EventListener):
-    def update(event):
-        #Send mail about Oppenheimer
+    def update(self, event):
+        # Send mail about Oppenheimer
         pass
