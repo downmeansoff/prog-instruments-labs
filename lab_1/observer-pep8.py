@@ -212,18 +212,18 @@ class Company:
     
     def __init__(self):
         """Initializes the company."""
-        self.CEO = None
+        self.ceo = None
         self.data = None
     
-    def __Company(self, data):
+    def __company(self, data):
         """Private method to initialize company data."""
         self.data = data
     
-    def get_CEO(self, data):
+    def get_ceo(self, data):
         """Returns the CEO of the company."""
-        if self.CEO is None:
-            self.CEO = Company.__Company(self, data)
-        return self.CEO 
+        if self.ceo is None:
+            self.ceo = Company.__company(self, data)
+        return self.ceo 
     
 
 # IV. Dependency Injection
@@ -365,7 +365,7 @@ class HandleCVV(Handler):
    
     def handle(self, num, cvv):
         """Handles the CVV code."""
-        if num != self.database.get(num):
+        if cvv != self.database.get(num):
             return False
         return self.handle_next(num, cvv)
 
