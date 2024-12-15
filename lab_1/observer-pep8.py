@@ -12,42 +12,52 @@ class Banana:
     def harvest(self):
         pass
 
+
 class GreenBanana(Banana):
     def harvest(self):
         pass
 
+
 class YellowBanana(Banana):
     def harvest(self):
         pass
+
 
 # - coconuts:
 class Coconut:
     def harvest(self):
         pass
 
+
 class GreenCoconut(Coconut):
     def harvest(self):
         pass
-        
+
+
 class YellowCoconut(Coconut):
     def harvest(self):
         pass
+
 
 # JUNGLES/FACTORIES:
 
 class Jungle:
     def get_banana(self):
         pass
-    
+
+
     def get_coconut(self):
         pass
+
 
 class JungleA(Jungle):
     def get_banana(self):
         return GreenBanana()
 
+
     def get_coconut(self):
         return GreenCoconut()
+
 
 class JungleB(Jungle):
     def get_banana(self):
@@ -55,7 +65,8 @@ class JungleB(Jungle):
     
     def get_coconut(self):
         return YellowCoconut()
-    
+
+
 # II. Builder Design Pattern
 
 # Build cups of boba:
@@ -69,7 +80,8 @@ class Boba:
         self.ice = ice
         self.sugar = sugar
         self.dine_in = dine_in
-    
+
+
 class BobaBuilder:
     
     def __init__(self, flavour, size, toppings, ice, sugar, dine_in):
@@ -82,24 +94,31 @@ class BobaBuilder:
     
     def set_flavour(self, flavour):
         self.flavour = flavour
-    
+
+
     def set_size(self, size):
         self.size = size
-    
+
+
     def set_toppings(self, toppings):
         self.toppings = toppings
-    
+
+
     def set_ice(self, ice):
         self.ice = ice
-    
+
+
     def set_sugar(self, sugar):
         self.sugar = sugar
-    
+
+
     def set_dine_in(self, dine_in):
         self.dine_in = dine_in
-    
+
+
     def build(self):
         return Boba(self.flavour, self.size, self.toppings, self.ice, self.sugar, self.dine_in)
+
 
 class Director:
     
@@ -151,11 +170,14 @@ class Company:
 class MenuItem:
     pass
 
+
 class FriedRice(MenuItem):
     pass
 
+
 class AvocadoToast(MenuItem):
     pass
+
 
 class Restaurant:
     def __init__(self, food):
@@ -164,19 +186,23 @@ class Restaurant:
     def prepare_food(self):
         pass
 
+
 # V. Delegation
 
 class Researcher:
     def exec(self):
         pass
 
+
 class UnpaidIntern(Researcher):
     def exec(self):
         print("Unpaid Intern doing research")
 
+
 class AssistantProfessor(Researcher):
     def exec(self):
         print("Assistant Professor doing research")
+
 
 class Professor(Researcher):
     def __init__(self, helper):
@@ -218,6 +244,7 @@ class HandleNum(Handler):
             return False
         return self.handle_next(num, cvv) 
 
+
 class HandleCVV(Handler):
 
     def __init__(self, data):
@@ -229,6 +256,7 @@ class HandleCVV(Handler):
             return False
         return self.handle_next(num, cvv)
 
+
 class AuthService:
     def __init__(self, handler):
         self.handler = handler
@@ -237,6 +265,7 @@ class AuthService:
         if self.handler.handle(num, cvv):
             return True
         return False
+
 
 def credit_main():
     database = {}
@@ -257,6 +286,7 @@ class Cinema:
     
     def get_movie(self):
         return self.noti
+
 
 class Notification:
     def __init__(self):
@@ -279,17 +309,19 @@ class Notification:
         for email in emails:
             email.update(event)
 
+
 class EventListener:
     def update(self, event):
         pass
+
 
 class BarbieListener(EventListener):
     def update(self, event):
         # Send mail about Barbie
         pass
 
+
 class OppenheimerListener(EventListener):
     def update(self, event):
         # Send mail about Oppenheimer
         pass
-в
