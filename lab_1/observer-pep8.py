@@ -61,64 +61,64 @@ class JungleB(Jungle):
 # Build cups of boba:
 
 class Boba:
-    def __init__(self, flavour="classic", size="M", toppings=["boba"], ice=100, sugar=100, dinein=True):
+    def __init__(self, flavour="classic", size="M", toppings=["boba"], ice=100, sugar=100, dine_in=True):
         print("Initialized")
         self.flavour = flavour
         self.size = size
         self.toppings = toppings
         self.ice = ice
         self.sugar = sugar
-        self.dinein = dinein
+        self.dine_in = dine_in
     
 class BobaBuilder:
     
-    def __init__(self, flavour, size, toppings, ice, sugar, dinein):
+    def __init__(self, flavour, size, toppings, ice, sugar, dine_in):
         self.flavour = flavour
         self.size = size
         self.toppings = toppings
         self.ice = ice
         self.sugar = sugar
-        self.dinein = dinein
+        self.dine_in = dine_in
     
-    def flavour(self, flavour):
+    def set_flavour(self, flavour):
         self.flavour = flavour
     
-    def size(self, size):
+    def set_size(self, size):
         self.size = size
     
-    def toppings(self, toppings):
+    def set_toppings(self, toppings):
         self.toppings = toppings
     
-    def ice(self, ice):
+    def set_ice(self, ice):
         self.ice = ice
     
-    def sugar(self, sugar):
+    def set_sugar(self, sugar):
         self.sugar = sugar
     
-    def dinein(self, dinein):
-        self.dinein = dinein
+    def set_dine_in(self, dine_in):
+        self.dine_in = dine_in
     
     def build(self):
-        return Boba(self.flavour, self.size, self.toppings, self.ice, self.sugar, self.dinein)
+        return Boba(self.flavour, self.size, self.toppings, self.ice, self.sugar, self.dine_in)
 
 class Director:
     
-    def build_dan_ha_order(builder):
-        builder.flavour("Oolong")
-        builder.size("L")
-        builder.toppings(["boba", "boba", "boba"])
+    def build_dan_ha_order(self, builder):
+        builder.set_flavour("Oolong")
+        builder.set_size("L")
+        builder.set_toppings(["boba", "boba", "boba"])
         builder.ice = 30
         builder.sugar = 50
-        builder.dinein = False
+        builder.dine_in = False
         return builder.build()
     
-    def build_worst_order(builder):
-        builder.flavour("Fruit")
-        builder.size("S")
-        builder.toppings(["red beans"])
+    def build_worst_order(self, builder):
+        builder.set_flavour("Fruit")
+        builder.set_size("S")
+        builder.set_toppings(["red beans"])
         builder.ice = 120
         builder.sugar = 120
-        builder.dinein = True
+        builder.dine_in = True
         return builder.build()
     
 # III. Singleton
@@ -137,9 +137,9 @@ class Company:
         self.data = data
     
     def get_CEO(self, data):
-        if CEO == None:
-            CEO = Company.__Company(self, data)
-        return CEO 
+        if self.CEO is None:
+            self.CEO = Company.__Company(self, data)
+        return self.CEO 
     
 
 # IV. Dependency Injection
@@ -179,8 +179,6 @@ class AssistantProfessor(Researcher):
         print("Assistant Professor doing research")
 
 class Professor(Researcher):
-    helper = None
-    
     def __init__(self, helper):
         self.helper = helper
     
@@ -193,43 +191,43 @@ class Professor(Researcher):
 class Handler:
     
     def __init__(self):
-        self.next = None
+        self.next_handler = None
     
     def get_next_handler(self):
-        return self.next
+        return self.next_handler
     
-    def set_next_handler(self, next):
-        self.next = next
+    def set_next_handler(self, next_handler):
+        self.next_handler = next_handler
     
     def handle(self, num, cvv):
         pass
     
     def handle_next(self, num, cvv):
-        if self.next is None:
+        if self.next_handler is None:
             return True
-        return next.handle(num, cvv)
+        return self.next_handler.handle(num, cvv)
     
 class HandleNum(Handler):
 
     def __init__(self, data):
         self.database = data
-        self.next = None
+        self.next_handler = None
    
     def handle(self, num, cvv):
         if num not in self.database.keys():
             return False
-        return self.handle_next(self, num, cvv) 
+        return self.handle_next(num, cvv) 
 
 class HandleCVV(Handler):
 
     def __init__(self, data):
         self.database = data
-        self.next = None
+        self.next_handler = None
    
     def handle(self, num, cvv):
         if num != self.database.get(num):
             return False
-        return self.handle_next(self, num, cvv)
+        return self.handle_next(num, cvv)
 
 class AuthService:
     def __init__(self, handler):
@@ -240,9 +238,10 @@ class AuthService:
             return True
         return False
 
-def CreditMain():
+def credit_main():
     database = {}
-    handler1 = HandleNum(database).set_next_handler(HandleCVV(database))
+    handler1 = HandleNum(database)
+    handler1.set_next_handler(HandleCVV(database))
     authenticate = AuthService(handler1)
     authenticate.authenticate("number", "security code")
 
@@ -265,7 +264,8 @@ class Notification:
     
     def subscribe(self, event, email):
         if event not in self.listserv:
-            self.listserv[event] = [].append(email)
+            self.listserv[event] = []
+            self.listserv[event].append(email)
         else:
             if email not in self.listserv[event]:
                 self.listserv[event].append(email)
@@ -292,3 +292,4 @@ class OppenheimerListener(EventListener):
     def update(self, event):
         # Send mail about Oppenheimer
         pass
+в
