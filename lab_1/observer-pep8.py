@@ -210,10 +210,9 @@ class Director:
 class Company:
     """Class representing a company."""
     
-    CEO = None
-
     def __init__(self):
         """Initializes the company."""
+        self.CEO = None
         self.data = None
     
     def __Company(self, data):
