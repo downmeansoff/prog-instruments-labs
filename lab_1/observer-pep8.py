@@ -104,7 +104,13 @@ class JungleB(Jungle):
 class Boba:
     """Class representing a boba drink."""
     
-    def __init__(self, flavour="classic", size="M", toppings=["boba"], ice=100, sugar=100, dine_in=True):
+    def __init__(
+            self,
+            flavour="classic",
+            size="M",
+            toppings=["boba"],
+            ice=100, sugar=100,
+            dine_in=True):
         """
         Initializes the boba drink.
 
@@ -177,7 +183,13 @@ class BobaBuilder:
 
     def build(self):
         """Creates and returns the boba drink."""
-        return Boba(self.flavour, self.size, self.toppings, self.ice, self.sugar, self.dine_in)
+        return Boba(
+            flavour=self.flavour,
+            size=self.size,
+            toppings=self.toppings,
+            ice=self.ice,
+            sugar=self.sugar,
+            dine_in=self.dine_in)
 
 
 class Director:
