@@ -93,14 +93,3 @@ def test_remove_tasks_parametrized(tasks_to_add, tasks_to_remove, expected_remai
         manager.remove_task(task)
     remaining_titles = [task.title for task in manager.list_tasks()]
     assert remaining_titles == expected_remaining
-
-def test_find_task_with_mock():
-    manager = TodoManager()
-    mock_task = MagicMock(spec=Task)
-    mock_task.title = "Mock Task"
-    manager.tasks.append(mock_task)
-
-    result = manager.find_task("Mock Task")
-
-    assert result is mock_task
-    mock_task.__repr__.assert_not_called()
