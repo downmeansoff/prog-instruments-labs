@@ -1,11 +1,18 @@
 import os
 import sys
-
 import enum
-
+import logging
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QDateEdit, QPushButton, QFileDialog
 from PyQt6.QtCore import Qt, QDate
 from datetime import datetime
+
+# Настройка логирования
+logging.basicConfig(level=logging.INFO, 
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    handlers=[
+                        logging.FileHandler("app.log"),
+                        logging.StreamHandler()
+                    ])
 
 sys.path.insert(0, "C:/Users/pudov/Desktop/lab3/Lab2")
 
@@ -69,6 +76,17 @@ class DateApp(QWidget):
         self.setWindowTitle('GetDataByDate')
         self.setGeometry(300, 300, 400, 200)
 
+    def browse_data(self) -> None:
+        """
+        Open file dialog to select a data file.
+        """
+        self.data_path, _ = QFileDialog.getOpenFileName(self, "Select Data File")
+        if self.data_path:
+            self.select_datafile.setText(os.path.basename(self.data_path))
+            logging.info(f"Data file selected: {self.data_path}")
+        else:
+            logging.warning("No data file selected.")
+
     def show_data(self) -> None:
         """
         Display data for the selected date.
@@ -79,42 +97,51 @@ class DateApp(QWidget):
                                    target_date=datetime.strptime(selected_date, '%Y-%m-%d'))
             if r is not None:
                 self.result_label.setText(" ".join(r))
+                logging.info(f"Data retrieved for date: {selected_date}")
             else:
                 self.result_label.setText("No data for the selected time")
+                logging.warning(f"No data found for date: {selected_date}")
         else:
             self.result_label.setText("Please select a file")
+            logging.error("Attempted to retrieve data without selecting a file.")
 
     def file_splitter(self, mode: Mode) -> None:
         """
         Splitting into files
         """
         if self.data_path is not None:
-            if (mode == Mode.split_by_x_y and split_csv_by_columns(input_file=self.data_path,
-                                    output_file_x=f'{os.path.dirname(self.data_path)}/X.csv',
-                                    output_file_y=f'{os.path.dirname(self.data_path)}/Y.csv')):
-                self.result_label.setText("Files created successfully")
+            if mode == Mode.split_by_x_y:
+                success = split_csv_by_columns(input_file=self.data_path,
+                                                output_file_x=f'{os.path.dirname(self.data_path)}/X.csv',
+                                                output_file_y=f'{os.path.dirname(self.data_path)}/Y.csv')
+                if success:
+                    self.result_label.setText("Files created successfully")
+                    logging.info("Data split into X and Y files successfully.")
+                else:
+                    logging.error("Failed to split data into X and Y files.")
 
-            if (mode == Mode.split_csv_by_year and split_csv_by_years(input_file=self.data_path,
-                                  output_folder=f'{os.path.dirname(self.data_path)}/years')):
-                self.result_label.setText("Files created successfully")
+            elif mode == Mode.split_csv_by_year:
+                success = split_csv_by_years(input_file=self.data_path,
+                                              output_folder=f'{os.path.dirname(self.data_path)}/years')
+                if success:
+                    self.result_label.setText("Files created successfully")
+                    logging.info("Data split by year successfully.")
+                else:
+                    logging.error("Failed to split data by year.")
 
-            if (mode == Mode.split_csv_by_weeks and split_csv_by_weeks(input_file=self.data_path,
-                                  output_folder=f'{os.path.dirname(self.data_path)}/weeks')):
-                self.result_label.setText("Files created successfully")
-
+            elif mode == Mode.split_csv_by_weeks:
+                success = split_csv_by_weeks(input_file=self.data_path,
+                                              output_folder=f'{os.path.dirname(self.data_path)}/weeks')
+                if success:
+                    self.result_label.setText("Files created successfully")
+                    logging.info("Data split by week successfully.")
+                else:
+                    logging.error("Failed to split data by week.")
         else:
-            self.result_label.setText("Can't create files")
+            logging.error("Attempted to split data without selecting a file.")
 
-    def browse_data(self) -> None:
-        """
-        Open a file dialog to browse and select data file.
-        """
-        self.data_path = QFileDialog.getOpenFileName(self, "Select Data File")[0]
-        self.select_datafile.setText(self.data_path)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = DateApp()
     window.show()
-    app.exec()
+    sys.exit(app.exec())
