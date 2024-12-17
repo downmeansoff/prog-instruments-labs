@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 from typing import List
-from todo_manager import Task, TodoManager 
+from main import Task, TodoManager 
 
 # tests for task class
 def test_task_creation():
